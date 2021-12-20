@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import logo from './assets/Caleb&Brown.svg'
+import logo from './assets/coin.gif'
 import "./App.css";
 import Coin from "./components/Coin";
 import SearchBar from './components/SearchBar'
@@ -13,6 +13,9 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [coinsPerPage] = useState(10);
+  const [keyword, setKeyWord] = useState('');
+  const [filteredData, setFilteredData] = useState(coins);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,21 +31,41 @@ function App() {
     fetchData();
   }, []);
 
-  const handleChange = (e) => {
-    setSearch(e.target.value);
-  };
+
+  // const handleSearch = (event) => {
+  //   let value = event.target.value.toLowerCase();
+  //   let result = [];
+  //   setKeyWord(value)
+  //   result = coins.filter((data) => {
+  //     return data.name.search(value) != -1;
+  //   });
+  //   setSearch(result);
+  // }
+
+  const handleSearch = async (input) => {
+    const filtered = coins.filter(coin => {
+      return (
+        coin.name.toLowerCase().includes(input.toLowerCase()) ||
+        coin.symbol.toLowerCase().includes(input.toLowerCase())
+      )
+    })
+    setKeyWord(input);
+    setSearch(filtered);
+  }
+
+  console.log(search)
 
   // Get current coins
-  const lastCoins = currentPage * coinsPerPage;
-  const firstCoins = lastCoins - coinsPerPage;
-  const currentCoins = coins.slice(firstCoins, lastCoins);
+  // const lastCoins = currentPage * coinsPerPage;
+  // const firstCoins = lastCoins - coinsPerPage;
+  // const currentCoins = coins.slice(firstCoins, lastCoins);
 
   // Filter coins based on names in search bar.
-  const filteredCoins = currentCoins.filter(
-    (coin) =>
-      coin.name.toLowerCase().indexOf(search.toLowerCase()) >= 0 ||
-      coin.symbol.toLowerCase().indexOf(search.toLowerCase()) >= 0
-  );
+  // const filteredCoins = currentCoins.filter(
+  //   (coin) =>
+  //     coin.name.toLowerCase().indexOf(search.toLowerCase()) >= 0 ||
+  //     coin.symbol.toLowerCase().indexOf(search.toLowerCase()) >= 0
+  // );
 
   //All coins
 
@@ -52,7 +75,6 @@ function App() {
 
   // TODO sort symbol and beautify project
   if (loading) {
-
     return (
       <div className='loading'>
         <Spinner animation="grow" variant="light" />
@@ -62,18 +84,18 @@ function App() {
 
   return (
     <div className="frontend-app">
-      <img src={logo} alt="header-logo" />
-      <SearchBar />
-      {coins ? coins.map((coin) => {
-        console.log(coin)
+      <img src={logo} alt="header-logo" style={{ height: 100 }} />
+      <SearchBar keyword={keyword} handleSearch={handleSearch} />
+      {search ? search.map((coin) => {
         return (
           <Coin {...coin} />
         )
       }) :
-        <div className='loading'>
-          <h1> unable to receive data... </h1>
-        </div>
-
+        coins.map((coin) => {
+          return (
+            <Coin {...coin} />
+          )
+        })
       }
     </div>
   );

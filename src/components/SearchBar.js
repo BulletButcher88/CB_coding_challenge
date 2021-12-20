@@ -1,26 +1,29 @@
 
 import React from 'react';
 
-const SearchBar = ({ keyword, setKeyword }) => {
+const SearchBar = ({ keyword, handleSearch }) => {
+
   return (
     <input
       style={BarStyling}
       key="random1"
       value={keyword}
-      placeholder={"search coins"}
-      onChange={(e) => setKeyword(e.target.value)}
+      placeholder={"crypto search"}
+      onChange={(e) => handleSearch(e.target.value)}
     />
   );
 }
 
 const BarStyling = {
-  width: "40vw",
+  height: "40px",
+  width: "400px",
+  color: "#CCC",
   background: "#000",
-  border: "1px #888",
-  padding: ".8rem",
+  padding: "1rem",
   margin: "10px",
-  textAlign: "center"
-
+  textAlign: "center",
+  fontSize: "20px",
+  border: `1px solid #222`,
 };
 
 export default SearchBar
