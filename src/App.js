@@ -5,7 +5,7 @@ import "./App.css";
 import Coin from "./components/Coin";
 import SearchBar from './components/SearchBar'
 import { Spinner } from 'react-bootstrap'
-// import Pagination from "./Pagination";
+import Pagination from "./components/Pagination";
 
 function App() {
   const [coins, setCoins] = useState([]);
@@ -32,16 +32,6 @@ function App() {
   }, []);
 
 
-  // const handleSearch = (event) => {
-  //   let value = event.target.value.toLowerCase();
-  //   let result = [];
-  //   setKeyWord(value)
-  //   result = coins.filter((data) => {
-  //     return data.name.search(value) != -1;
-  //   });
-  //   setSearch(result);
-  // }
-
   const handleSearch = async (input) => {
     const filtered = coins.filter(coin => {
       return (
@@ -53,21 +43,10 @@ function App() {
     setSearch(filtered);
   }
 
-  console.log(search)
-
   // Get current coins
-  // const lastCoins = currentPage * coinsPerPage;
-  // const firstCoins = lastCoins - coinsPerPage;
-  // const currentCoins = coins.slice(firstCoins, lastCoins);
-
-  // Filter coins based on names in search bar.
-  // const filteredCoins = currentCoins.filter(
-  //   (coin) =>
-  //     coin.name.toLowerCase().indexOf(search.toLowerCase()) >= 0 ||
-  //     coin.symbol.toLowerCase().indexOf(search.toLowerCase()) >= 0
-  // );
-
-  //All coins
+  const lastCoins = currentPage * coinsPerPage;
+  const firstCoins = lastCoins - coinsPerPage;
+  const currentCoins = coins.slice(firstCoins, lastCoins);
 
 
   // Change page
@@ -86,12 +65,13 @@ function App() {
     <div className="frontend-app">
       <img src={logo} alt="header-logo" style={{ height: 100 }} />
       <SearchBar keyword={keyword} handleSearch={handleSearch} />
-      {search ? search.map((coin) => {
+      <Pagination postsPerPage={coinsPerPage} totalPage={coins.length} />
+      {keyword.length > 0 ? search.map((coin) => {
         return (
           <Coin {...coin} />
         )
       }) :
-        coins.map((coin) => {
+        currentCoins.map((coin) => {
           return (
             <Coin {...coin} />
           )
