@@ -12,9 +12,8 @@ function App() {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [coinsPerPage] = useState(10);
+  const [coinsPerPage] = useState(8);
   const [keyword, setKeyWord] = useState('');
-  const [filteredData, setFilteredData] = useState(coins);
 
 
   useEffect(() => {
@@ -63,11 +62,12 @@ function App() {
 
   return (
     <div className="frontend-app">
-      <div >
-        <img src={logo} alt="header-logo" style={{ height: 20, marginRight: "25vw", justifyContent: "center", alignContent: "space-between" }} />
+      <div style={styles.headerContainer}>
+        <img src={logo} alt="header-logo" style={styles.img} />
+        <hi style={styles.title}>Crypto Search</hi>
         <SearchBar keyword={keyword} handleSearch={handleSearch} />
       </div>
-      <Pagination postsPerPage={coinsPerPage} totalPage={coins.length} />
+      <Pagination postsPerPage={coinsPerPage} totalPage={coins.length} paginate={paginate} currentPage={currentPage} />
       {keyword.length > 0 ? search.map((coin) => {
         return (
           <Coin {...coin} />
@@ -81,5 +81,24 @@ function App() {
       }
     </div>
   );
+}
+
+const styles = {
+  headerContainer: {
+    margin: 10,
+    display: "flex",
+    alignItems: "center",
+  },
+  img: {
+    height: 50,
+    marginRight: 10,
+    justifyContent: "center",
+    alignContent: "space-between"
+  },
+  title: {
+    marginRight: "8vw",
+    fontSize: 40,
+    fontWeight: '900'
+  }
 }
 export default App;
