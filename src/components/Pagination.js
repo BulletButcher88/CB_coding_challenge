@@ -13,13 +13,20 @@ export const Pagination = ({ postsPerPage, totalPage }) => {
       flexDirection: "row",
     },
     pages: {
-      heigh: "10px",
       width: "30px",
-      color: "white",
       listStyleType: "none",
-      margin: "10px",
-      border: "1px solid white",
+      padding: "2px",
+      margin: "5px",
+      border: "1px solid #333",
+      justifyContent: "center",
       textAlign: 'center',
+      borderRadius: "100px"
+    },
+    link: {
+      color: "#ddd",
+      textDecoration: "none",
+      heigh: "30px",
+      width: "30px",
     }
   }
 
@@ -29,7 +36,7 @@ export const Pagination = ({ postsPerPage, totalPage }) => {
         {pageNumbers.map(num => {
           return (
             <li key={num} style={styles.pages}>
-              <a href='!#' style={{ textDecoration: "none" }}>
+              <a href='!#' style={styles.link}>
                 {num}
               </a>
             </li>

@@ -63,8 +63,10 @@ function App() {
 
   return (
     <div className="frontend-app">
-      <img src={logo} alt="header-logo" style={{ height: 100 }} />
-      <SearchBar keyword={keyword} handleSearch={handleSearch} />
+      <div >
+        <img src={logo} alt="header-logo" style={{ height: 20, marginRight: "25vw", justifyContent: "center", alignContent: "space-between" }} />
+        <SearchBar keyword={keyword} handleSearch={handleSearch} />
+      </div>
       <Pagination postsPerPage={coinsPerPage} totalPage={coins.length} />
       {keyword.length > 0 ? search.map((coin) => {
         return (
